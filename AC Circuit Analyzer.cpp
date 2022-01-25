@@ -9,5 +9,6 @@ int main(){
     cout << "Sawasdee";
     cout<< "dee";
     cout<<"edok";
+    cout << "this is joke";
     return 0;
 }
