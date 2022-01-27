@@ -6,6 +6,12 @@
 #include<complex>
 using namespace std;
 
+//drawing : จิบ
+//input และ output : ต้น
+//polar_to_rectangular และ rectangular_to_polar : เบส
+//analysis : หวาย
+//complex_processing : นิว
+
 double voltage;
 double angular_frequency;
 double offset; 
@@ -96,7 +102,28 @@ void input(string **canvas, vector<string> componant){
         else cout << "invalid choice";
         cout << endl;
     }
-    
+
     //ชนิดอุปกรณ์:ตำแหน่งx1:ตำแหน่งy1:ตำแหน่งx2:ตำแหน่งy2:ค่าของตัวแปรเช่น 10H(เฮนรี่)
 }
-//void drawing_prossing(string **canvas)
+
+void polar_to_rectangular(vector<string> componant, vector<string> componant_rectangular){
+
+}
+
+void analysis(vector<string> componant, vector<string> componant_rectangular){
+
+}
+
+/*
+void complex_processing("ส่งในรูปของ <complex>"){
+
+}
+
+void rectangular_to_polar("ส่งในรูปของ <complex>"){
+
+}
+*/
+
+void output(string Z, double angular_frequency_process){
+
+}
