@@ -84,7 +84,7 @@ void input(string **canvas, vector<string> componant){
             for(int i = 0; i < componant.size(); i++) cout << i+1 << " " << componant[i] << endl;
             cout << "pick componant your like to remove(first number of list) :";
             cin >> pick;
-            componant.erase(pick,pick);
+            componant.erase(componant.begin()+pick-1);
         }
         else cout << "invalid choice";
         cout << endl;
