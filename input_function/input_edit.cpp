@@ -32,6 +32,11 @@ void input(string **canvas, vector<string> componant){
             cout << "Your y2 position : ";
             cin >> position_y2;
             //แยกให้กรอก x,y ทีละค่าเพื่อป้องกันเกิดการสับสน
+
+            if(position_x1 == position_x2 & position_y1 == position_y2){
+                cout<<"Can't use the same position";
+                continue;
+            }//กรณีกรอกจุด1กับจุด2เป็นจุดเดียวกัน
             
             if(atof(position_x1.c_str())*atof(position_y1.c_str()) > high*wide || atof(position_x2.c_str())*atof(position_y2.c_str()) > high*wide){
                 cout << "Error off canvas limit" << endl;
@@ -72,3 +77,9 @@ void input(string **canvas, vector<string> componant){
     }
 
 }//ชนิดอุปกรณ์:ตำแหน่งx1:ตำแหน่งy1:ตำแหน่งx2:ตำแหน่งy2:ค่าของตัวแปรเช่น 10H(เฮนรี่)
+
+int main(){
+
+
+    return 0 ;
+}
