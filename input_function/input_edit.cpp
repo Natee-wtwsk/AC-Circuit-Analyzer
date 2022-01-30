@@ -54,7 +54,7 @@ void input(string **canvas, vector<string> componant){
             } //กำหนดหน่วยเพื่อป้องกัน Error
 
             if(componant_type == "1"){
-                componant.push_back(componant_type+":"+position_x1+":"+position_y1+":"+position_x2+":"+position_y2);
+                componant.push_back(componant_type+":"+position_x1+":"+position_y1+":"+position_x2+":"+position_y2);//กรณีเป็น wire ไม่มีvalue+uinit
             }else
                 componant.push_back(componant_type+":"+position_x1+":"+position_y1+":"+position_x2+":"+position_y2+": "+componant_value+componant_value_unit);     
         }
