@@ -24,7 +24,7 @@ int main(/int argc, double angular_frequency, vector<string> componant, vector<s
         const char text = componant[i].substr(end+1, componant[i].size()).c_str();
         sscanf(text, format, &value, &type);
         if(type == 'H'){
-            send_back << angular_frequencyvalue;
+            send_back << angular_frequency*value;
             string send = send_back.str();
             componant_rectangular.push_back(send);
         } 
