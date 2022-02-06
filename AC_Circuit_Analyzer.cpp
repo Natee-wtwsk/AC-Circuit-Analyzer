@@ -137,11 +137,13 @@ void input(string **canvas, vector<componant_struct> componants){
         componant_struct c;
         for(int i = 0; i < componants.size(); i++){
             cout << i+1 << " " << componants[i].componant_in_connect;
-                if(componants[i].componant_type == 1) cout << " o----o ";
-                if(componants[i].componant_type == 2) cout << " o-MW-o ";
-                if(componants[i].componant_type == 3) cout << " o-||-o ";
-                if(componants[i].componant_type == 4) cout << " o-oo-o ";
-                cout << componants[i].componant_out_connect << "Value:" << componants[i].componant_value_polar << endl;
+            if(componants[i].componant_type == 1) cout << "o----o";
+            if(componants[i].componant_type == 2) cout << "o-MW-o";
+            if(componants[i].componant_type == 3) cout << "o-||-o";
+            if(componants[i].componant_type == 4) cout << "o-oo-o";
+            cout << componants[i].componant_out_connect;
+            if(componants[i].componant_value_polar > 0) cout << " Value:" << componants[i].componant_value_polar << endl;
+            else cout << endl;
         }
         cout << "pick your componant\n" << "0:finish componant choose\n1:wire (o---o)\n2:resistance (o-MW-o)\n3:capacitor (o-||-o)\n4:inductance (o-oo-o)\n5:remove your pick\npick :";
         cin >> c.componant_type;
@@ -163,7 +165,7 @@ void input(string **canvas, vector<componant_struct> componants){
                 continue;
             } //กรณีเกินตาราง
 
-            if(c.componant_out_connect > 1 & c.componant_out_connect < 5){
+            if(c.componant_out_connect > 1 && c.componant_out_connect < 5){
                 cout << "input your componant_value (don't input unit):";
                 cin >> c.componant_value_polar;
                 if(c.componant_type == 3) c.componant_value_rectangular = voltage_scource.angular_frequency*c.componant_value_polar;
@@ -175,10 +177,10 @@ void input(string **canvas, vector<componant_struct> componants){
             unsigned int pick;
             for(int i = 0; i < componants.size(); i++){
                 cout << i+1 << " " << componants[i].componant_in_connect;
-                if(componants[i].componant_type == 1) cout << " o----o ";
-                if(componants[i].componant_type == 2) cout << " o-MW-o ";
-                if(componants[i].componant_type == 3) cout << " o-||-o ";
-                if(componants[i].componant_type == 4) cout << " o-oo-o ";
+                if(componants[i].componant_type == 1) cout << "o----o";
+                if(componants[i].componant_type == 2) cout << "o-MW-o";
+                if(componants[i].componant_type == 3) cout << "o-||-o";
+                if(componants[i].componant_type == 4) cout << "o-oo-o";
                 cout << componants[i].componant_out_connect;
                 if(componants[i].componant_value_polar > 0) cout << " Value:" << componants[i].componant_value_polar << endl;
                 else cout << endl;
@@ -208,7 +210,7 @@ void analysis(vector<componant_struct> componants){
 
 void to_x_and_y_position(long int position, long int &x_position, long int &y_position){
     y_position = ceil((double)position/wide);
-    x_position = (position-((y_position)*high))/wide;
+    x_position = position-((y_position-1)*wide);
 
     return;
 }
