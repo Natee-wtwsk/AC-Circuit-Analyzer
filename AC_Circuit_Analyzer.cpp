@@ -165,7 +165,9 @@ void input(string **canvas, vector<componant_struct> componants){
                 continue;
             } //กรณีเกินตาราง
 
-            if(c.componant_out_connect > 1 && c.componant_out_connect < 5){
+            if(c.componant_type == 1) c.componant_value_polar = 0;
+
+            if(c.componant_type > 1){
                 cout << "input your componant_value (don't input unit):";
                 cin >> c.componant_value_polar;
                 if(c.componant_type == 3) c.componant_value_rectangular = voltage_scource.angular_frequency*c.componant_value_polar;
