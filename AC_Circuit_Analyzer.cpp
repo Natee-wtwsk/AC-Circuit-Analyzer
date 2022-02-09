@@ -6,6 +6,7 @@
 #include<complex>
 #include<sstream>
 
+
 using namespace std;
 
 #define SSTR( x ) static_cast< ostringstream & >( \
@@ -91,43 +92,61 @@ void drawing(string **canvas, vector<componant_struct> componants){
         cout << "\n\n";
     }
 }
-void drawing_add(string **canvas,char componant[]){
-    int count = 1,type,x1,y1,x2,y2,value,a,R1=1,R2=1;
-    char format [] = "%d %d:%d:%d:%d:%d:%d";
-    sscanf(componant,format,&a,&type,&x1,&y1,&x2,&y2,&value);
-    R1=(x1*10)+y1;
-    R2=(x2*10)+y2;
-    cout<<R1<<" "<<R2;
-    cout <<"new circuit :"<<"\n";
+void drawing_add(string **canvas,vector<componant_struct> componants){
+    int count = 1,sum=1,count1=0;
     for(int i = 0; i < high; i++){
         for(int j = 0; j < wide; j++){
-            if(type == 1){
-                canvas[(R1-1)/10][(R1-1)%10] = "o--";
-                canvas[(R2-1)/10][(R2-1)%10] = "--o";
-                if(canvas[i][j] == "") cout << setw(4) << count;
-                else cout << setw(4) << canvas[i][j];
+            sum=(i*10)+j;    
+            count1 = componants[i].componant_in_connect;
+            if(componants[i].componant_type == 1){
+                if(componants[i].componant_in_connect == sum) canvas[i][j-1]="o--";
+                if(componants[i].componant_out_connect-count1 !=1){
+                        while (componants[i].componant_out_connect-count1 > 1){
+                            canvas[(count1)/10][(count1)%10]="--";
+                            count1++;
+                        }
+                }
+                if(componants[i].componant_out_connect == sum)  canvas[i][j-1]="--o"; 
             }
-            if(type == 2){
-                canvas[(R1-1)/10][(R1-1)%10] = "o-w";
-                canvas[(R2-1)/10][(R2-1)%10] = "w-o";
-                if(canvas[i][j] == "") cout << setw(4) << count;
-                else cout << setw(4) << canvas[i][j];
+            if(componants[i].componant_type == 2){
+                if(componants[i].componant_in_connect== sum) canvas[i][j-1]="o-M";
+                if(componants[i].componant_out_connect-count1 !=1){
+                        while (componants[i].componant_out_connect-count1 > 1){
+                            canvas[(count1)/10][(count1)%10]="MW";
+                            count1++;
+                        }
+                }
+                if(componants[i].componant_out_connect== sum) canvas[i][j-1]= "W-o";
             }
-            if(type == 3){
-                canvas[(R1-1)/10][(R1-1)%10] = "o-|";
-                canvas[(R2-1)/10][(R2-1)%10] = "|-o";
-                if(canvas[i][j] == "") cout << setw(4) << count;
-                else cout << setw(4) << canvas[i][j];
+            if(componants[i].componant_type == 3){
+                if(componants[i].componant_in_connect== sum)canvas[i][j-1]="o-|";
+                if(componants[i].componant_out_connect-count1 !=1){
+                        while (componants[i].componant_out_connect-count1 > 1){
+                            canvas[(count1)/10][(count1)%10]="||";
+                            count1++;
+                        }
+                }
+                if(componants[i].componant_out_connect== sum)canvas[i][j-1]="|-o";
+                    
             }
-             if(type == 4){
-                canvas[(R1-1)/10][(R1-1)%10] = "o-o";
-                canvas[(R2-1)/10][(R2-1)%10] = "o-o";
-                if(canvas[i][j] == "") cout << setw(4) << count;
-                else cout << setw(4) << canvas[i][j];
+            if(componants[i].componant_type == 4){
+                if(componants[i].componant_in_connect== sum) canvas[i][j-1]= "o-o";
+                if(componants[i].componant_out_connect-count1 !=1){
+                        while (componants[i].componant_out_connect-count1 > 1){
+                            canvas[(count1)/10][(count1)%10]="oo";
+                            count1++;
+                        }
+                }
+                if(componants[i].componant_out_connect== sum)canvas[i][j-1]= "o-o";
             }
+        }
+    }
+    for(int i = 0; i < high; i++){
+        for(int j = 0; j < wide; j++){
+            if(canvas[i][j] == "") cout << setw(4) << count;
+            else cout << setw(4) << canvas[i][j];
             count++;
         }
-
         cout << "\n\n";
     }
 }
@@ -194,6 +213,7 @@ void input(string **canvas, vector<componant_struct> componants){
         
         else cout << "invalid choice";
         cout << endl;
+        drawing_add(canvas, componants);
     }
 
 }//ชนิดอุปกรณ์:ตำแหน่งx1:ตำแหน่งy1:ตำแหน่งx2:ตำแหน่งy2:ค่าของตัวแปรเช่น 10H(เฮนรี่)
