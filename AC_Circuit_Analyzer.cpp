@@ -7,6 +7,7 @@
 #include<sstream>
 
 #include"analysis.h"
+#include"struct.h"
 
 using namespace std;
 
@@ -21,22 +22,6 @@ using namespace std;
 
 int high = 10, wide = 20; // ค่าเริ่มต้นของขนาดตาราง
 
-struct componant_struct{
-	int componant_type;
-	long int componant_in_connect;
-	long int componant_out_connect;
-	double componant_value_polar;
-    double componant_value_rectangular;
-    
-};
-
-struct componant_voltage_scource{
-    double voltage;
-    double angular_frequency;
-    double offset; 
-	long int voltage_scourc_in_connect;
-	long int voltage_scourc_out_connect;
-};
 componant_voltage_scource voltage_scource;
 
 void drawing(string **canvas, vector<componant_struct> componants); // รับข้อมูลเป็น ชนิดอุปกรณ์ ตำแหน่ง(หัวและท้าย(x1 y1 x2 y2))(ชนิดอุปกรณ์:ตำแหน่งy1:ตำแหน่งx1:ตำแหน่งy2:ตำแหน่งx2:ค่าของตัวแปรเช่น 10H(เฮนรี่)) ตัวแปลอุปกรณ์ และวาดออกมาเป็นวงจร
@@ -76,6 +61,7 @@ int main(){
     canvas[(voltage_source_position-1)/10][(voltage_source_position-1)%10] = "R";
     drawing(canvas, componants);
     input(canvas, componants);
+    cout << analysis(componants);
     
     for(int i = 0; i < high; i++) delete [] canvas[i];
     delete [] canvas;

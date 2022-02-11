@@ -1,6 +1,9 @@
 #include<vector>
 #include<string>
 #include<complex>
+
+#include"struct.h"
+
 using namespace std;
 
 class componant_struct_analysis{
@@ -35,6 +38,7 @@ void analysis_sorted();
 void analysis_connect();
 void analysis_parallel();
 void analysis_series();
+bool analysis_short_circuit();
 complex<double> complex_processing_parallel(complex<double> complex1, complex<double> complex2);
 complex<double> complex_processing_series(complex<double> complex1, complex<double> complex2);
 
@@ -45,6 +49,7 @@ complex<double> analysis(vector<componant_struct> componants){
         analysis_connect();
         analysis_parallel();
         analysis_series();
+        if(analysis_short_circuit() == true) return complex<double>(0, 0);
     }
 
     return components_analysis[0].componant_value_rectangular;
@@ -135,8 +140,7 @@ void analysis_series(){
                 temp.componant_in_connect = -1;
                 temp.componant_out_connect = -1;
                 temp.componant_value_polar = -1;
-                if((components_analysis[i].componant_value_rectangular.real() == 0) && (components_analysis[i].componant_value_rectangular.imag() == 0)) temp.componant_value_rectangular = components_analysis[j].componant_value_rectangular;
-                else temp.componant_value_rectangular = complex_processing_series(components_analysis[i].componant_value_rectangular, components_analysis[j].componant_value_rectangular);
+                temp.componant_value_rectangular = complex_processing_series(components_analysis[i].componant_value_rectangular, components_analysis[j].componant_value_rectangular);
                 if(components_analysis[i].connect_out == components_analysis[j].connect_in){
                     temp.connect_in = components_analysis[i].connect_in;
                     temp.connect_out = components_analysis[j].connect_out;
@@ -155,6 +159,15 @@ void analysis_series(){
             }
         }
     }
+}
+
+bool analysis_short_circuit(){
+    int components_analysis_size = components_analysis.size();
+    for(int i = 1; i < components_analysis_size; i++){
+        if(components_analysis[i].connect_in == components_analysis[i].connect_out) return true;
+    }
+
+    return false;
 }
 
 complex<double> complex_processing_parallel(complex<double> complex1, complex<double> complex2){
