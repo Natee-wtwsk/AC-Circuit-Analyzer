@@ -6,6 +6,7 @@
 #include<complex>
 #include<sstream>
 
+#include"analysis.h"
 
 using namespace std;
 
@@ -42,7 +43,7 @@ void drawing(string **canvas, vector<componant_struct> componants); // รับ
 void drawing_add(string **canvas, char []);
 void input(string **canvas,vector<componant_struct> componants); // รับข้อมูล ชนิดอุปกรณ์ ตำแหน่ง(หัวและท้าย(x1 y1 x2 y2)) ตัวแปลอุปกรณ์ ลงใน vector<string> componant
 //***ไม่ได้ใช้งานแล้ว void polar_to_rectangular(vector<componant_struct> componants); // แปลงค่าของอุปกรณ์ในรูป polar ให้อยู่ในรูป rectangular เช่น 10F เป็น 1/jwF
-void analysis(vector<componant_struct> componants); // วิเคราะห์วงจรโดยอิงค่า Z จาก componant_rectangular และตำแหน่งของอุปกรณ์จาก componant แล้วคืนค่าเป็นค่า Z รวม
+complex<double> analysis(vector<componant_struct> componants); // วิเคราะห์วงจรโดยอิงค่า Z จาก componant_rectangular และตำแหน่งของอุปกรณ์จาก componant แล้วคืนค่าเป็นค่า Z รวม
 //***ไม่ได้ใช้งานแล้ว void complex_processing("ส่งในรูปของ <complex>"); // รับค่า complex จากฟังก์ชัน analysis คำนวน บวก ลบ คูณ หาร และคืนกลับเป็นค่า complex
 //void rectangular_to_polar("ส่งในรูปของ <complex>"); // รับค่า complex ในตอนจบของจากฟังก์ชัน analysis แปลงค่าของอุปกรณ์ในรูป rectangular ให้อยู่ในรูป polar (ส่วนกลับของฟังก์ชัน polar_to_rectangular) ดูจากที่ปักหมุดใน Discord
 void output(string Z, double angular_frequency_process); // รับค่าความถี่เชิงมุมจากฟังก์ชัน rectangular_to_polar และตัวแปล voltage offset จาก global แล้วนำมาแสดงผลในรูปฟังก์ชัน I = "voltage"cos("angular_frequency"+-"offset") พร้อมทั้งแสดงผลค่าความต้านทานรวมและฟังก์ชันในรูป sinusoid
@@ -219,10 +220,6 @@ void input(string **canvas, vector<componant_struct> componants){
 }//ชนิดอุปกรณ์:ตำแหน่งx1:ตำแหน่งy1:ตำแหน่งx2:ตำแหน่งy2:ค่าของตัวแปรเช่น 10H(เฮนรี่)
 
 void polar_to_rectangular(vector<componant_struct> componants){
-
-}
-
-void analysis(vector<componant_struct> componants){
 
 }
 
