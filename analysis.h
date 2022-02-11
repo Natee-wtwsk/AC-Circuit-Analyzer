@@ -1,6 +1,10 @@
+#ifndef analysis_h
+#define analysis_h
+
 #include<vector>
 #include<string>
 #include<complex>
+#include<iostream>
 
 #include"struct.h"
 
@@ -177,3 +181,5 @@ complex<double> complex_processing_parallel(complex<double> complex1, complex<do
 complex<double> complex_processing_series(complex<double> complex1, complex<double> complex2){
     return complex1+complex2;
 }
+
+#endif
