@@ -75,6 +75,7 @@ void input(componant_voltage_scource voltage_scource, string **canvas, vector<co
                 cout << "Invalid pick" << endl;
                 continue;
             }
+            drawing_remove(canvas,componants, high, wide,pick);
             componants.erase(componants.begin()+pick-1);
         }
         
