@@ -3,6 +3,14 @@
         "xstring": "cpp",
         "iostream": "cpp",
         "vector": "cpp",
-        "polar_to_rectangular": "cpp"
-    }
+        "polar_to_rectangular": "cpp",
+        "iomanip": "cpp",
+        "array": "cpp",
+        "compare": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
