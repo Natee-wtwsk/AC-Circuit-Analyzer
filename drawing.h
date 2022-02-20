@@ -14,7 +14,18 @@
 
 using namespace std;
 
-
+void swap(vector<componant_struct> &componants, int high, int wide){
+    long int  A;
+    for(int i = 0; i < high; i++){
+        for(int j = 0; j < wide; j++){ 
+            if(componants[i].componant_in_connect>componants[i].componant_out_connect){
+                A = componants[i].componant_in_connect;
+                componants[i].componant_in_connect = componants[i].componant_out_connect;
+                componants[i].componant_out_connect = A;
+            }
+        } 
+    }
+}
 
 void drawing(string **canvas, vector<componant_struct> &componants, int high, int wide){
     int count = 1;
@@ -36,6 +47,7 @@ void to_x_and_y_position(long int position, long int &x_position, long int &y_po
 void drawing_add(string **canvas,vector<componant_struct> &componants, int high, int wide){
     long int x1,y1,x2,y2;
     int count = 1,count1=0;
+    swap(componants, high, wide);
     for(int i = 0; i < high; i++){
         for(int j = 0; j < wide; j++){    
             count1 = componants[i].componant_in_connect;
@@ -115,7 +127,7 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                 }       
             }
             if(componants[i].componant_type == 4){
-                 to_x_and_y_position(componants[i].componant_in_connect, x1, y1, high, wide);
+                to_x_and_y_position(componants[i].componant_in_connect, x1, y1, high, wide);
                 to_x_and_y_position(componants[i].componant_out_connect, x2, y2, high, wide);
                 if(y1==y2){
                     canvas[y1-1][x1-1]="o-o";
@@ -147,21 +159,30 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
 
 void drawing_remove(string **canvas,vector<componant_struct> &componants, int high, int wide,int pick){
     int count = 1,count1=0;
-    long int x_position, y_position;
-    cout<<componants[pick].componant_type<<" "<<componants[pick].componant_in_connect<<" "<<componants[pick].componant_out_connect<<'\n';
-            if(componants[pick].componant_type == 5){
-                to_x_and_y_position(componants[pick].componant_in_connect, x_position, y_position, high, wide);
-                canvas[y_position-1][x_position-1]=componants[pick].componant_in_connect ;
-                if(componants[pick].componant_out_connect-count1 !=1){
-                        while (componants[pick].componant_out_connect-count1 > 1){
-                            canvas[(count1)/10][(count1)%10]= count1 ;
-                            count1++;
+    long int x1,y1,x2,y2;
+                to_x_and_y_position(componants[pick-1].componant_in_connect, x1, y1, high, wide);
+                to_x_and_y_position(componants[pick-1].componant_out_connect, x2, y2, high, wide);
+                if(y1==y2){
+                    canvas[y1-1][x1-1]=componants[pick-1].componant_in_connect;
+                    if(componants[pick-1].componant_out_connect-count1 !=1){
+                            while (componants[pick-1].componant_out_connect-count1 > 1){
+                                canvas[(count1)/10][(count1)%10]=count1;
+                                count1++;
+                            }
                         }
+
+                    canvas[y2-1][x2-1]=componants[pick-1].componant_out_connect; 
+                }else if(x1==x2){
+                    canvas[y1-1][x1-1]=componants[pick-1].componant_in_connect;
+                    if(y1-y2 !=1){
+                            while (componants[pick-1].componant_out_connect-count1 > 0){
+                                count1+=wide;
+                                canvas[(count1-1)/10][(count1-1)%10]=count1;
+                            }
+                        }
+
+                    canvas[y2-1][x2-1]=componants[pick-1].componant_out_connect; 
                 }
-                to_x_and_y_position(componants[pick].componant_out_connect, x_position, y_position, high, wide);
-                canvas[y_position-1][x_position-1]= componants[pick].componant_out_connect;
-            }
-        
     
      drawing(canvas, componants, high, wide);
 }    
@@ -178,6 +199,7 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
 
         }
     }
+
 }*/
 
 
