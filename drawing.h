@@ -163,10 +163,10 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
                 to_x_and_y_position(componants[pick-1].componant_in_connect, x1, y1, high, wide);
                 to_x_and_y_position(componants[pick-1].componant_out_connect, x2, y2, high, wide);
                 if(y1==y2){
-                    canvas[y1-1][x1-1]=componants[pick-1].componant_in_connect;
+                    canvas[y1-1][x1-1]="";
                     if(componants[pick-1].componant_out_connect-count1 !=1){
                             while (componants[pick-1].componant_out_connect-count1 > 1){
-                                canvas[(count1)/10][(count1)%10]=count1;
+                                canvas[(count1)/10][(count1)%10]="";
                                 count1++;
                             }
                         }
@@ -177,14 +177,13 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
                     if(y1-y2 !=1){
                             while (componants[pick-1].componant_out_connect-count1 > 0){
                                 count1+=wide;
-                                canvas[(count1-1)/10][(count1-1)%10]=count1;
+                                canvas[(count1-1)/10][(count1-1)%10]="";
                             }
                         }
 
-                    canvas[y2-1][x2-1]=componants[pick-1].componant_out_connect; 
+                    canvas[y2-1][x2-1]=""; 
                 }
-    
-     drawing(canvas, componants, high, wide);
+                 drawing(canvas, componants, high, wide);
 }    
 
 /*bool chack_drawing(string **canvas, vector<componant_struct> &componants, int high, int wide){
