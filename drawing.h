@@ -171,11 +171,11 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
                             }
                         }
 
-                    canvas[y2-1][x2-1]=componants[pick-1].componant_out_connect; 
+                    canvas[y2-1][x2-1]=""; 
                 }else if(x1==x2){
-                    canvas[y1-1][x1-1]=componants[pick-1].componant_in_connect;
+                    canvas[y1-1][x1-1]="";
                     if(y1-y2 !=1){
-                            while (componants[pick-1].componant_out_connect-count1 > 0){
+                            while (componants[pick-1].componant_out_connect-count1 > 1){
                                 count1+=wide;
                                 canvas[(count1-1)/10][(count1-1)%10]="";
                             }
@@ -183,7 +183,6 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
 
                     canvas[y2-1][x2-1]=""; 
                 }
-                 drawing(canvas, componants, high, wide);
 }    
 
 /*bool chack_drawing(string **canvas, vector<componant_struct> &componants, int high, int wide){
