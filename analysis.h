@@ -48,14 +48,24 @@ complex<double> complex_processing_series(complex<double> complex1, complex<doub
 
 complex<double> analysis(vector<componant_struct> componants){
     analysis_begin(componants);
+    for(int n = 0; n < components_analysis.size(); n++) cout << components_analysis[n].componant_value_rectangular << " ";
+    cout << endl;
     analysis_sorted();
+    for(int n = 0; n < components_analysis.size(); n++) cout << components_analysis[n].componant_value_rectangular << " ";
+    cout << endl;
+    for(int n = 0; n < components_analysis.size(); n++) cout << components_analysis[n].connect_in << " ";
+    cout << endl;
+    for(int n = 0; n < components_analysis.size(); n++) cout << components_analysis[n].connect_out << " ";
+    cout << endl;
     while(components_analysis.size() > 1){
         analysis_connect();
         analysis_parallel();
         analysis_series();
-        if(analysis_short_circuit() == true) return complex<double>(0, 0);
+        if(analysis_short_circuit() == true) {
+            cout << "Short! ";
+            return complex<double>(0, 0);
+        }
     }
-
     return components_analysis[0].componant_value_rectangular;
 }
 
@@ -86,7 +96,7 @@ void analysis_sorted(){
     componant_struct_analysis temp;
     int components_analysis_size = components_analysis.size();
     int j;
-    for(int i = 1; i < components_analysis_size; i++){
+    for(int i = 0; i < components_analysis_size; i++){
 		temp = components_analysis[i];
 		for(j = i; j > 0 && components_analysis[j-1].componant_type > temp.componant_type; j--) components_analysis[j] = components_analysis[j-1];
 		components_analysis[j] = temp;
@@ -96,8 +106,8 @@ void analysis_sorted(){
 void analysis_connect(){
     int components_analysis_size = components_analysis.size();
     int j;
-    for(int i = 1; i < components_analysis_size; i++){
-        for(j = i; j < components_analysis_size; j++){
+    for(int i = 0; i < components_analysis_size; i++){
+        for(j = i+1; j < components_analysis_size; j++){
             if(components_analysis[i].componant_in_connect == components_analysis[j].componant_in_connect) components_analysis[j].connect_in = components_analysis[i].connect_in;
             if(components_analysis[i].componant_in_connect == components_analysis[j].componant_out_connect) components_analysis[j].connect_out = components_analysis[i].connect_in;
             if(components_analysis[i].componant_out_connect == components_analysis[j].componant_in_connect) components_analysis[j].connect_in = components_analysis[i].connect_out;
@@ -109,7 +119,7 @@ void analysis_connect(){
 void analysis_parallel(){
     int components_analysis_size = components_analysis.size();
     int j;
-    for(int i = 1; i < components_analysis_size; i++){
+    for(int i = 0; i < components_analysis_size; i++){
         for(j = i+1; j < components_analysis_size; j++){
             if(((components_analysis[i].connect_in == components_analysis[j].connect_in) && (components_analysis[i].connect_out == components_analysis[j].connect_out)) || ((components_analysis[i].connect_in == components_analysis[j].connect_out) || (components_analysis[i].connect_out == components_analysis[j].connect_in))){
                 componant_struct_analysis temp;
@@ -136,7 +146,7 @@ void analysis_parallel(){
 void analysis_series(){
     int components_analysis_size = components_analysis.size();
     int j;
-    for(int i = 1; i < components_analysis_size; i++){
+    for(int i = 0; i < components_analysis_size; i++){
         for(j = i+1; j < components_analysis_size; j++){
             if((components_analysis[i].connect_out == components_analysis[j].connect_in) || (components_analysis[i].connect_in == components_analysis[j].connect_out)){
                 componant_struct_analysis temp;
@@ -144,7 +154,8 @@ void analysis_series(){
                 temp.componant_in_connect = -1;
                 temp.componant_out_connect = -1;
                 temp.componant_value_polar = -1;
-                temp.componant_value_rectangular = complex_processing_series(components_analysis[i].componant_value_rectangular, components_analysis[j].componant_value_rectangular);
+                if((components_analysis[i].componant_value_rectangular.real() == 0) && (components_analysis[i].componant_value_rectangular.imag() == 0)) temp.componant_value_rectangular = components_analysis[j].componant_value_rectangular;
+                else temp.componant_value_rectangular = complex_processing_series(components_analysis[i].componant_value_rectangular, components_analysis[j].componant_value_rectangular);
                 if(components_analysis[i].connect_out == components_analysis[j].connect_in){
                     temp.connect_in = components_analysis[i].connect_in;
                     temp.connect_out = components_analysis[j].connect_out;
@@ -168,7 +179,7 @@ void analysis_series(){
 bool analysis_short_circuit(){
     int components_analysis_size = components_analysis.size();
     for(int i = 1; i < components_analysis_size; i++){
-        if(components_analysis[i].connect_in == components_analysis[i].connect_out) return true;
+        if((components_analysis[i].connect_in == components_analysis[i].connect_out) && (components_analysis[i].componant_value_rectangular.real() != 0) && (components_analysis[i].componant_value_rectangular.imag() != 0)) return true;
     }
 
     return false;
