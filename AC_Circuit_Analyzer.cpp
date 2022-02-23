@@ -10,6 +10,7 @@
 #include"input.h"
 #include"drawing.h"
 #include"analysis.h"
+#include"output.h"
 
 using namespace std;
 
