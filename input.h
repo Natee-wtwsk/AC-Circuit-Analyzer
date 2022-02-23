@@ -79,7 +79,10 @@ void input(componant_voltage_scource voltage_scource, string **canvas, vector<co
             componants.erase(componants.begin()+pick-1);
         }
         
-        else cout << "invalid choice";
+        else{
+            cout << "invalid choice";
+            continue;
+        }
         cout << endl;
         drawing_add(canvas, componants, high, wide);
     }
