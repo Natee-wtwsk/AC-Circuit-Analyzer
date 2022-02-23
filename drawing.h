@@ -84,7 +84,6 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                 }
             }
             if(componants[i].componant_type == 2){
-                cout<<y1<<" "<<x1<<" "<<y2<<" "<<x2<<" "<<'\n';
                 if(y1==y2){
                     canvas[y1-1][x1-1]="o-M";
                     canvas[y2-1][x2-1]="W-o";
@@ -129,7 +128,7 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                     if(y1-y2 !=1){
                              for(long int i = y1 ;y1 < y2;i++){
                                 canvas[y1][x1-1]="|";
-                                 if(y2-y1 == Medaim2)canvas[y1][x1-1]="||";
+                                 if(y2-y1 == Medaim2)canvas[y1-1][x1-1]="||";
                                 y1++;
                         }
 
@@ -156,7 +155,7 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                     if(y1-y2 !=1){
                            for(long int i = y1 ;y1 < y2;i++){
                                 canvas[y1][x1-1]="|";
-                                 if(y2-y1 == Medaim2)canvas[y1][x1-1]="oo";
+                                 if(y2-y1 == Medaim2)canvas[y1-1][x1-1]="oo";
                                 y1++;
                             }
                         }
@@ -177,70 +176,19 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
                 to_x_and_y_position(componants[pick-1].componant_in_connect, x1, y1, high, wide);
                 to_x_and_y_position(componants[pick-1].componant_out_connect, x2, y2, high, wide);
                 if(y1==y2){
-                    canvas[y1-1][x1-1]="";
-                    if(x2-x1 !=1){
-                           for(long int i = x1 ;x1 < x2;i++){
-                                canvas[y1-1][x1]="";
+                           for(long int i = x1 ;x1 <=x2;i++){
+                                canvas[y1-1][x1-1]="";
                                 x1++;
                             }
-                        }
-
-                    canvas[y2-1][x2-1]=""; 
                 }else if(x1==x2){
-                    canvas[y1-1][x1-1]="";
-                    if(y1-y2 !=1){
-                            for(long int i = y1 ;y1 < y2;i++){
-                                canvas[y1][x1-1]="";
+                            for(long int i = y1 ;y1 <= y2;i++){
+                                canvas[y1-1][x1-1]="";
                                 y1++;
                             }
                         }
-
-                    canvas[y2-1][x2-1]=""; 
                 }
-}    
+    
 
 
 
 #endif
-
-
-/*if(componants[i].componant_type > 1){
-                to_x_and_y_position(componants[i].componant_in_connect, x1, y1, high, wide);
-                to_x_and_y_position(componants[i].componant_out_connect, x2, y2, high, wide);
-                if(y1==y2){
-                    canvas[y1-1][x1-1]="o--";
-                    if(componants[i].componant_out_connect-count1 !=1){
-                            while (componants[i].componant_out_connect-count1 > 1){
-                                canvas[(count1)/10][(count1)%10]="--";
-                                   if(componants[i].componant_type == 2){
-                                    if(count1-(componants[i].componant_in_connect-1) == Medaim){canvas[(count1)/10][(count1)%10]="MW";}
-                                }
-                                 if(componants[i].componant_type == 3){
-                                    if(count1-(componants[i].componant_in_connect-1) == Medaim){canvas[(count1)/10][(count1)%10]="||";}
-                                }
-                                 if(componants[i].componant_type == 4){
-                                    if(count1-(componants[i].componant_in_connect-1) == Medaim){canvas[(count1)/10][(count1)%10]="oo";}
-                                }
-                                count1++;
-                            }
-                        }
-
-                    canvas[y2-1][x2-1]="--o"; 
-                }else if(x1==x2){
-                    canvas[y1-1][x1-1]="o";
-                    if(y1-y2 !=1){
-                            while (componants[i].componant_out_connect-count1 > 0){
-                                count1+=wide;
-                                canvas[(count1-1)/10][(count1-1)%10]="|";
-                                if(componants[i].componant_type == 2){
-                                    if(count1-componants[i].componant_in_connect == Medaim){canvas[(count1-1)/10][(count1-1)%10]="MW";}}
-                                if(componants[i].componant_type == 3){
-                                    if(count1-componants[i].componant_in_connect == Medaim){canvas[(count1-1)/10][(count1-1)%10]="||";}}
-                                 if(componants[i].componant_type == 4){
-                                    if(count1-componants[i].componant_in_connect == Medaim){canvas[(count1-1)/10][(count1-1)%10]="oo";}}
-                            }
-                        }
-
-                    canvas[y2-1][x2-1]="o"; 
-                }
-            }*/
