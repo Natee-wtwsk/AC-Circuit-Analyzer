@@ -180,7 +180,7 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
                     canvas[y1-1][x1-1]="";
                     if(x2-x1 !=1){
                            for(long int i = x1 ;x1 < x2;i++){
-                                canvas[(count1)/10][(count1)%10]="";
+                                canvas[y1-1][x1]="";
                                 x1++;
                             }
                         }
@@ -190,7 +190,7 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
                     canvas[y1-1][x1-1]="";
                     if(y1-y2 !=1){
                             for(long int i = y1 ;y1 < y2;i++){
-                                canvas[(count1-1)/10][(count1-1)%10]="";
+                                canvas[y1][x1-1]="";
                                 y1++;
                             }
                         }
