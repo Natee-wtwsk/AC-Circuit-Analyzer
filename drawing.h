@@ -52,18 +52,18 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
         for(int j = 0; j < wide; j++){    
             count1 = componants[i].componant_in_connect;
             Medaim1 = ((componants[i].componant_out_connect-count1)+1)/2;
-            if(((componants[i].componant_out_connect-count1)/2)%2==0){
-                Medaim1 = (componants[i].componant_out_connect-count1)/2;
-                Medaim2 = (componants[i].componant_out_connect-count1)/2;
-            }else{
-                Medaim1 = ((componants[i].componant_out_connect-count1)+1)/2;
-                Medaim2 = ((componants[i].componant_out_connect-count1)/2)+5;}
+                if(((componants[i].componant_out_connect-count1)/2)%2==0){
+                    Medaim1 = (componants[i].componant_out_connect-count1)/2;
+                    Medaim2 = (componants[i].componant_out_connect-count1)/2;
+                }else{
+                    Medaim1 = ((componants[i].componant_out_connect-count1)+1)/2;
+                    Medaim2 = ((componants[i].componant_out_connect-count1)/2)+5;}
 
             if(componants[i].componant_type == 1){
                 to_x_and_y_position(componants[i].componant_in_connect, x1, y1, high, wide);
                 to_x_and_y_position(componants[i].componant_out_connect, x2, y2, high, wide);
                 if(y1==y2){
-                    canvas[y1-1][x1-1]="o--";
+                    canvas[y1-1][x1-1]="o";
                     if(componants[i].componant_out_connect-count1 !=1){
                             while (componants[i].componant_out_connect-count1 > 1){
                                 canvas[(count1)/10][(count1)%10]="--";
@@ -71,7 +71,7 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                             }
                         }
 
-                    canvas[y2-1][x2-1]="--o"; 
+                    canvas[y2-1][x2-1]="o"; 
                 }else if(x1==x2){
                     canvas[y1-1][x1-1]="o";
                     if(y1-y2 !=1){
@@ -90,11 +90,13 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                 if(y1==y2){
                     canvas[y1-1][x1-1]="o-M";
                     if(componants[i].componant_out_connect-count1 !=1){
+                            canvas[y1-1][x1-1]="o";
                             while (componants[i].componant_out_connect-count1 > 1){
                                 canvas[(count1)/10][(count1)%10]="--";
                                 if(count1-(componants[i].componant_in_connect-1) == Medaim1)canvas[(count1)/10][(count1)%10]="MW";
                                 count1++;
                             }
+                            canvas[y2-1][x2-1]="o";
                         }
 
                     canvas[y2-1][x2-1]="W-o"; 
@@ -117,11 +119,13 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                 if(y1==y2){
                     canvas[y1-1][x1-1]="o-|";
                     if(componants[i].componant_out_connect-count1 !=1){
+                        canvas[y1-1][x1-1]="o";
                             while (componants[i].componant_out_connect-count1 > 1){
                                 canvas[(count1)/10][(count1)%10]="--";
                                 if(count1-(componants[i].componant_in_connect-1) == Medaim1)canvas[(count1)/10][(count1)%10]="||";
                                 count1++;
                             }
+                        canvas[y2-1][x2-1]="o"; 
                         }
                 
                     canvas[y2-1][x2-1]="|-o"; 
@@ -146,11 +150,13 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                 if(y1==y2){
                     canvas[y1-1][x1-1]="o-o";
                     if(componants[i].componant_out_connect-count1 !=1){
+                        canvas[y1-1][x1-1]="o";
                             while (componants[i].componant_out_connect-count1 > 1){
                                 canvas[(count1)/10][(count1)%10]="--";
                                 if(count1-(componants[i].componant_in_connect-1) == Medaim1)canvas[(count1)/10][(count1)%10]="oo";
                                 count1++;
                             }
+                        canvas[y2-1][x2-1]="o"; 
                         }
                     canvas[y2-1][x2-1]="o-o"; 
                 }else if(x1==x2){
@@ -200,6 +206,7 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
                     canvas[y2-1][x2-1]=""; 
                 }
 }    
+
 
 
 #endif
