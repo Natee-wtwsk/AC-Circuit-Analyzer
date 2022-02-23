@@ -52,7 +52,13 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
         for(int j = 0; j < wide; j++){    
             count1 = componants[i].componant_in_connect;
             Medaim1 = ((componants[i].componant_out_connect-count1)+1)/2;
-            Medaim2 = (componants[i].componant_out_connect-count1)/2;
+            if(((componants[i].componant_out_connect-count1)/2)%2==0){
+                Medaim1 = (componants[i].componant_out_connect-count1)/2;
+                Medaim2 = (componants[i].componant_out_connect-count1)/2;
+            }else{
+                Medaim1 = ((componants[i].componant_out_connect-count1)+1)/2;
+                Medaim2 = ((componants[i].componant_out_connect-count1)/2)+5;}
+
             if(componants[i].componant_type == 1){
                 to_x_and_y_position(componants[i].componant_in_connect, x1, y1, high, wide);
                 to_x_and_y_position(componants[i].componant_out_connect, x2, y2, high, wide);
