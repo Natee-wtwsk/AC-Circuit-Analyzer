@@ -84,7 +84,7 @@ complex<double> analysis(vector<componant_struct> componants, componant_voltage_
     //analysis_connect();
     analysis_wire_connect();
     analysis_wire_and_components_connect();
-    //for(int i = 0; i < components_analysis.size(); i++) cout << components_analysis[i].componant_type << " " << components_analysis[i].componant_value_rectangular << " " << components_analysis[i].componant_in_connect << " " << components_analysis[i].connect_in << " " << components_analysis[i].connect_out << endl;
+    //for(int i = 0; i < components_analysis.size(); i++) cout << components_analysis[i].componant_type << " " << components_analysis[i].componant_value_rectangular << " " << components_analysis[i].componant_in_connect << " " << components_analysis[i].componant_out_connect << " " << components_analysis[i].connect_in << " " << components_analysis[i].connect_out << endl;
     //cout << voltage_source_analysis.connect_in << " " << voltage_source_analysis.connect_out << endl;
     int cycles = 0;
     while(components_analysis.size() > 1){
@@ -92,11 +92,13 @@ complex<double> analysis(vector<componant_struct> componants, componant_voltage_
         analysis_series();
         if(analysis_short_circuit() == true) return complex<double>(0, 0);
         if(cycles > 200){
-            cout << "Out of 200 cycles";
+            cout << "Out of 200 cycles" << endl;
             break;
         }
         cycles++;
     }
+    //for(int i = 0; i < components_analysis.size(); i++) cout << components_analysis[i].componant_type << " " << components_analysis[i].componant_value_rectangular << " " << components_analysis[i].componant_in_connect << " " << components_analysis[i].componant_out_connect << " " << components_analysis[i].connect_in << " " << components_analysis[i].connect_out << endl;
+    //cout << voltage_source_analysis.connect_in << " " << voltage_source_analysis.connect_out << endl;
     return connect_circuit();
 }
 
@@ -115,8 +117,9 @@ void analysis_begin(vector<componant_struct> componants, componant_voltage_scour
         temp.componant_in_connect = componants[i].componant_in_connect;
         temp.componant_out_connect = componants[i].componant_out_connect;
         temp.componant_value_polar = componants[i].componant_value_polar;
-        if(componants[i].componant_type != 2) temp.componant_value_rectangular = complex<double>(0, componants[i].componant_value_rectangular);
-        else temp.componant_value_rectangular = complex<double>(componants[i].componant_value_rectangular, 0);
+        if(componants[i].componant_type == 1) temp.componant_value_rectangular = complex<double>(0, 0);
+        else if(componants[i].componant_type == 2) temp.componant_value_rectangular = complex<double>(componants[i].componant_value_rectangular, 0);
+        else if(componants[i].componant_type <= 4) temp.componant_value_rectangular = complex<double>(0, componants[i].componant_value_rectangular);
         if(componants[i].componant_type == 1){
             temp.connect_in = i+1;
             temp.connect_out = i+1;
@@ -261,9 +264,10 @@ void analysis_series(){
 
                 components_analysis[i] = temp;
                 components_analysis.erase(components_analysis.begin()+j);
-                if(i < j) i++;
+                return;
+                /*if(i < j) i++;
                 j--;
-                components_analysis_size--;
+                components_analysis_size--;*/
                 /*for(int n = 0; n < components_analysis.size(); n++) cout << components_analysis[n].componant_value_rectangular << " ";
                 cout << endl;*/
             }
@@ -300,6 +304,7 @@ complex<double> complex_processing_series(complex<double> complex1, complex<doub
 
 complex<double> connect_circuit(){
     //cout << voltage_source_analysis.connect_in << "  " << components_analysis[0].connect_in << "  " << voltage_source_analysis.connect_out << "  " << components_analysis[0].connect_out;
+    //cout << components_analysis[0].componant_value_rectangular << endl;
     if(((voltage_source_analysis.connect_in == components_analysis[0].connect_in) && (voltage_source_analysis.connect_out == components_analysis[0].connect_out)) || ((voltage_source_analysis.connect_in == components_analysis[0].connect_out) && (voltage_source_analysis.connect_out == components_analysis[0].connect_in))){
         return components_analysis[0].componant_value_rectangular;
     }

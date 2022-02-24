@@ -12,6 +12,9 @@
 
 #include"struct.h"
 #include"analysis.h"
+
+
+
 struct componant_Z{
     double r;
     double Theta;
@@ -24,6 +27,7 @@ struct componant_I{
     double offset; 
 };
 
+#define _USE_MATH_DEFINES
 using namespace std;
 void output(componant_voltage_scource voltage_scource,complex<double> Z){
     componant_Z z_result;
@@ -39,10 +43,9 @@ void output(componant_voltage_scource voltage_scource,complex<double> Z){
     if(z_result.x_real == 0&&z_result.y_image<0){z_result.Theta = -90;
     }else if(z_result.x_real == 0&&z_result.y_image>0){z_result.Theta = 90;
     }else if(z_result.y_image == 0){z_result.Theta = 0;
-    }else{ z_result.Theta = atan(z_result.y_image/z_result.x_real);}
+    }else{ z_result.Theta = atan2(z_result.y_image,z_result.x_real)*180/M_PI;}
 
     z_result.r = sqrt(pow(z_result.x_real,2)+pow(z_result.y_image,2));
-   
 
     I.current = (voltage_scource.voltage/z_result.r);
     I.offset = voltage_scource.offset-z_result.Theta;
