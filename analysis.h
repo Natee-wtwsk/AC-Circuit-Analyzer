@@ -138,6 +138,7 @@ void analysis_sorted(){
     int components_analysis_size = components_analysis.size();
     int j;
     for(int i = 0; i < components_analysis_size; i++){
+        if(components_analysis[i].componant_type != 1) continue;
 		temp = components_analysis[i];
 		for(j = i; j > 0 && components_analysis[j-1].componant_type > temp.componant_type; j--) components_analysis[j] = components_analysis[j-1];
 		components_analysis[j] = temp;

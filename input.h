@@ -58,16 +58,16 @@ void input(componant_voltage_scource voltage_scource, string **canvas, vector<co
                 if((int(input_temp.find_first_of("i")) > -1) || (int(input_temp.find_first_of("j")) > -1)){
                     if(int(input_temp.find_first_of("i")) > -1) input_temp.erase(int(input_temp.find_first_of("i")), 1);
                     else input_temp.erase(int(input_temp.find_first_of("j")), 1);
-                    c.componant_value_rectangular = atof(input_temp.c_str());
-                    if(c.componant_type == 2) c.componant_value_polar = c.componant_value_rectangular;
-                    else if(c.componant_type == 3) c.componant_value_polar = -(1/(voltage_scource.angular_frequency*c.componant_value_rectangular));
-                    else if(c.componant_type == 4) c.componant_value_polar = (c.componant_value_rectangular)/(voltage_scource.angular_frequency);
+                    (c.componant_value_rectangular) = atof(input_temp.c_str());
+                    if((c.componant_type) == 2) (c.componant_value_polar) = (c.componant_value_rectangular);
+                    else if((c.componant_type) == 3) (c.componant_value_polar) = -(1/((voltage_scource.angular_frequency)*(c.componant_value_rectangular)));
+                    else if((c.componant_type) == 4) (c.componant_value_polar) = (c.componant_value_rectangular)/(voltage_scource.angular_frequency);
                 }
                 else{
-                    c.componant_value_polar = atof(input_temp.c_str());
-                    if(c.componant_type == 2) c.componant_value_rectangular = c.componant_value_polar;
-                    else if(c.componant_type == 3) c.componant_value_rectangular = -(1/(voltage_scource.angular_frequency*c.componant_value_polar));
-                    else if(c.componant_type == 4) c.componant_value_rectangular = (voltage_scource.angular_frequency)*(c.componant_value_polar);
+                    (c.componant_value_polar) = atof(input_temp.c_str());
+                    if((c.componant_type) == 2) (c.componant_value_rectangular) = (c.componant_value_polar);
+                    else if((c.componant_type) == 3) (c.componant_value_rectangular) = -(1/(voltage_scource.angular_frequency*c.componant_value_polar));
+                    else if((c.componant_type) == 4) (c.componant_value_rectangular) = (voltage_scource.angular_frequency)*(c.componant_value_polar);
                 }
                 input_temp.clear();
             } //กำหนดหน่วยเพื่อป้องกัน Error
