@@ -119,7 +119,7 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                         RunE1(canvas,type,x1,y1,x2,y2,Medaim1);
                     }
                 }else if(x1==x2){
-                   RunE2(canvas,type,x1,y1,x2,y2,Medaim2); 
+                        RunE2(canvas,type,x1,y1,x2,y2,Medaim2); 
                 }
             }
             if(componants[i].componant_type == 3){
@@ -130,7 +130,7 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                         RunE1(canvas,type,x1,y1,x2,y2,Medaim1);
                         }
                 }else if(x1==x2){
-                     RunE2(canvas,type,x1,y1,x2,y2,Medaim2); 
+                        RunE2(canvas,type,x1,y1,x2,y2,Medaim2); 
                 }
 
             } 
@@ -142,7 +142,7 @@ void drawing_add(string **canvas,vector<componant_struct> &componants, int high,
                         RunE1(canvas,type,x1,y1,x2,y2,Medaim1);
                     }
                 }else if(x1==x2){
-                     RunE2(canvas,type,x1,y1,x2,y2,Medaim2); 
+                        RunE2(canvas,type,x1,y1,x2,y2,Medaim2); 
                 }
             }   
            
@@ -169,7 +169,8 @@ void drawing_remove(string **canvas,vector<componant_struct> &componants, int hi
                                 y1++;
                             }
                         }
-                }
+                drawing(canvas, componants, high, wide);
+    }
     
 
 
