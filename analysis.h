@@ -1,6 +1,7 @@
 #ifndef analysis_h
 #define analysis_h
 
+#include <algorithm>
 #include<vector>
 #include<string>
 #include<complex>
@@ -23,6 +24,19 @@ class componant_struct_analysis{
         ~componant_struct_analysis();
 };
 
+class componant_voltage_source_analysis{
+    public:
+        double voltage;
+        double angular_frequency;
+        double offset; 
+	    long int voltage_source_in_connect;
+	    long int voltage_source_out_connect;
+        int connect_in;
+        int connect_out;
+        componant_voltage_source_analysis();
+        ~componant_voltage_source_analysis();
+};
+
 componant_struct_analysis::componant_struct_analysis(){
     componant_type = -1;
     componant_in_connect = -1;
@@ -36,8 +50,22 @@ componant_struct_analysis::~componant_struct_analysis(){
 
 };
 
+componant_voltage_source_analysis::componant_voltage_source_analysis(){
+    voltage = 220;
+    angular_frequency = 50;
+    offset = 0; 
+	voltage_source_in_connect = 0;
+	voltage_source_out_connect = 0;
+    connect_in = 0;
+    connect_out = 0;
+}
+componant_voltage_source_analysis::~componant_voltage_source_analysis(){
+
+}
+
+componant_voltage_source_analysis voltage_source_analysis;
 vector<componant_struct_analysis> components_analysis;
-void analysis_begin(vector<componant_struct> componants);
+void analysis_begin(vector<componant_struct> componants, componant_voltage_scource voltage_scource);
 void analysis_sorted();
 void analysis_connect();
 void analysis_wire_connect();
@@ -47,28 +75,40 @@ void analysis_series();
 bool analysis_short_circuit();
 complex<double> complex_processing_parallel(complex<double> complex1, complex<double> complex2);
 complex<double> complex_processing_series(complex<double> complex1, complex<double> complex2);
+complex<double> connect_circuit();
 
-complex<double> analysis(vector<componant_struct> componants){
+complex<double> analysis(vector<componant_struct> componants, componant_voltage_scource voltage_scource){
     components_analysis.clear();
-    analysis_begin(componants);
+    analysis_begin(componants, voltage_scource);
     analysis_sorted();
     //analysis_connect();
     analysis_wire_connect();
     analysis_wire_and_components_connect();
-    //for(int i = 0; i < components_analysis.size(); i++) cout << components_analysis[i].componant_type << " " << components_analysis[i].connect_in << " " << components_analysis[i].connect_out << endl;
+    //for(int i = 0; i < components_analysis.size(); i++) cout << components_analysis[i].componant_type << " " << components_analysis[i].componant_value_rectangular << " " << components_analysis[i].componant_in_connect << " " << components_analysis[i].connect_in << " " << components_analysis[i].connect_out << endl;
+    //cout << voltage_source_analysis.connect_in << " " << voltage_source_analysis.connect_out << endl;
+    int cycles = 0;
     while(components_analysis.size() > 1){
         analysis_parallel();
         analysis_series();
-        if(analysis_short_circuit() == true) {
-            cout << "Short! ";
-            return complex<double>(0, 0);
+        if(analysis_short_circuit() == true) return complex<double>(0, 0);
+        if(cycles > 200){
+            cout << "Out of 200 cycles";
+            break;
         }
+        cycles++;
     }
-    return components_analysis[0].componant_value_rectangular;
+    return connect_circuit();
 }
 
-void analysis_begin(vector<componant_struct> componants){
+void analysis_begin(vector<componant_struct> componants, componant_voltage_scource voltage_scource){
     int componant_size = componants.size();
+    voltage_source_analysis.voltage = voltage_scource.voltage;
+    voltage_source_analysis.angular_frequency = voltage_scource.angular_frequency;
+    voltage_source_analysis.offset = voltage_scource.offset;
+    voltage_source_analysis.voltage_source_in_connect = voltage_scource.voltage_scourc_in_connect;
+    voltage_source_analysis.voltage_source_out_connect = voltage_scource.voltage_scourc_out_connect;
+    voltage_source_analysis.connect_in = componant_size+10;
+    voltage_source_analysis.connect_out = -(componant_size+10);
     for(int i = 0; i < componant_size; i++){
         componant_struct_analysis temp;
         temp.componant_type = componants[i].componant_type;
@@ -120,26 +160,29 @@ void analysis_connect(){
 
 void analysis_wire_connect(){
     int components_analysis_size = components_analysis.size();
+    int numbers_of_wire = 0;
+    while(components_analysis[numbers_of_wire].componant_type == 1) numbers_of_wire++;
+    //cout << "number_of_wire :" << number_of_wire << endl;
     int j;
-    for(int i = 0; (i < components_analysis_size) && (components_analysis[i].componant_type == 1); i++){
-        for(j = 0; (j < components_analysis_size) && (components_analysis[j].componant_type == 1); j++){
+    for(int i = 0; i < numbers_of_wire; i++){
+        for(j = numbers_of_wire-1; j >= 0; j--){
             if(i == j) continue;
             if(components_analysis[i].componant_in_connect == components_analysis[j].componant_in_connect){
                 components_analysis[j].connect_in = components_analysis[i].connect_in;
-                components_analysis[j].connect_out = components_analysis[i].connect_in;
+                components_analysis[j].connect_out = components_analysis[i].connect_out;
             }
             if(components_analysis[i].componant_in_connect == components_analysis[j].componant_out_connect){
                 components_analysis[j].connect_in = components_analysis[i].connect_in;
-                components_analysis[j].connect_out = components_analysis[i].connect_in;
+                components_analysis[j].connect_out = components_analysis[i].connect_out;
             }
             if(components_analysis[i].componant_out_connect == components_analysis[j].componant_in_connect){
-                components_analysis[j].connect_in = components_analysis[i].connect_out;
+                components_analysis[j].connect_in = components_analysis[i].connect_in;
                 components_analysis[j].connect_out = components_analysis[i].connect_out;
             }
             if(components_analysis[i].componant_out_connect == components_analysis[j].componant_out_connect){
-                components_analysis[j].connect_in = components_analysis[i].connect_out;
+                components_analysis[j].connect_in = components_analysis[i].connect_in;
                 components_analysis[j].connect_out = components_analysis[i].connect_out;
-            }
+            }       
         }
     }
 }
@@ -148,13 +191,18 @@ void analysis_wire_and_components_connect(){
     int components_analysis_size = components_analysis.size();
     int j;
     for(int i = components_analysis_size-1; (i >= 0) && (components_analysis[i].componant_type != 1); i--){
-        for(j = 0; (j < components_analysis_size) && (components_analysis[j].componant_type == 1); j++){
-            if(i == j) continue;
+        for(j = components_analysis_size-1; j >=0; j--){
             if(components_analysis[i].componant_in_connect == components_analysis[j].componant_in_connect) components_analysis[i].connect_in = components_analysis[j].connect_in;
             if(components_analysis[i].componant_in_connect == components_analysis[j].componant_out_connect) components_analysis[i].connect_in = components_analysis[j].connect_out;
             if(components_analysis[i].componant_out_connect == components_analysis[j].componant_in_connect) components_analysis[i].connect_out = components_analysis[j].connect_in;
             if(components_analysis[i].componant_out_connect == components_analysis[j].componant_out_connect) components_analysis[i].connect_out = components_analysis[j].connect_out;
         }
+    }
+    for(int i = 0; i < components_analysis_size; i++){
+        if(voltage_source_analysis.voltage_source_in_connect == components_analysis[i].componant_in_connect) voltage_source_analysis.connect_in = components_analysis[i].connect_in;
+        if(voltage_source_analysis.voltage_source_in_connect == components_analysis[i].componant_out_connect) voltage_source_analysis.connect_in = components_analysis[i].connect_out;
+        if(voltage_source_analysis.voltage_source_out_connect == components_analysis[i].componant_in_connect) voltage_source_analysis.connect_out = components_analysis[i].connect_in;
+        if(voltage_source_analysis.voltage_source_out_connect == components_analysis[i].componant_out_connect) voltage_source_analysis.connect_out = components_analysis[i].connect_out;
     }
 }
 
@@ -193,6 +241,9 @@ void analysis_series(){
         for(j = 0; j < components_analysis_size; j++){
             if(i == j) continue;
             if((components_analysis[i].connect_out == components_analysis[j].connect_in) || (components_analysis[i].connect_in == components_analysis[j].connect_out)){
+                if(((components_analysis[i].connect_in == components_analysis[j].connect_in) && (components_analysis[i].connect_out == components_analysis[j].connect_out)) || ((components_analysis[i].connect_in == components_analysis[j].connect_out) && (components_analysis[i].connect_out == components_analysis[j].connect_in))){
+                    continue;
+                }
                 componant_struct_analysis temp;
                 temp.componant_type = 99;
                 temp.componant_in_connect = components_analysis[i].componant_in_connect;
@@ -221,12 +272,21 @@ void analysis_series(){
 }
 
 bool analysis_short_circuit(){
+    bool short_flag;
     int components_analysis_size = components_analysis.size();
     for(int i = 0; i < components_analysis_size; i++){
-        if((components_analysis[i].connect_in == components_analysis[i].connect_out) && (components_analysis[i].componant_value_rectangular.real() != 0) && (components_analysis[i].componant_value_rectangular.imag() != 0)) return true;
+        if((components_analysis[i].connect_in == components_analysis[i].connect_out) && (components_analysis[i].componant_value_rectangular != complex<double>(0, 0))){
+            cout << "Short Circuit at Node " << components_analysis[i].connect_in << ", componant_value_rectangular is " << components_analysis[i].componant_value_rectangular << endl;
+            short_flag = true;
+            break;
+        }
     }
-
-    return false;
+    if(voltage_source_analysis.connect_in == voltage_source_analysis.connect_out){
+        cout << "Voltage Source is Short" << endl;
+        short_flag = true;
+    }
+    if(short_flag == true) return true;
+    else return false;
 }
 
 complex<double> complex_processing_parallel(complex<double> complex1, complex<double> complex2){
@@ -236,6 +296,17 @@ complex<double> complex_processing_parallel(complex<double> complex1, complex<do
 
 complex<double> complex_processing_series(complex<double> complex1, complex<double> complex2){
     return complex1+complex2;
+}
+
+complex<double> connect_circuit(){
+    //cout << voltage_source_analysis.connect_in << "  " << components_analysis[0].connect_in << "  " << voltage_source_analysis.connect_out << "  " << components_analysis[0].connect_out;
+    if(((voltage_source_analysis.connect_in == components_analysis[0].connect_in) && (voltage_source_analysis.connect_out == components_analysis[0].connect_out)) || ((voltage_source_analysis.connect_in == components_analysis[0].connect_out) && (voltage_source_analysis.connect_out == components_analysis[0].connect_in))){
+        return components_analysis[0].componant_value_rectangular;
+    }
+    else{
+            cout << "Unconnect Voltage Source";
+            return complex<double>(0, 0);
+    }
 }
 
 #endif
