@@ -8,6 +8,7 @@
 #include<vector>
 #include<complex>
 #include<sstream>
+#include<stdlib.h>
 
 #include"struct.h"
 #include"drawing.h"
@@ -73,6 +74,7 @@ void input(componant_voltage_scource voltage_scource, string **canvas, vector<co
             } //กำหนดหน่วยเพื่อป้องกัน Error
             componants.push_back(c);
             componants_to_analyze.push_back(c);
+            if(system("CLS")) system("clear");
         }
         else if(c.componant_type == 5){
             unsigned int pick;
@@ -94,6 +96,7 @@ void input(componant_voltage_scource voltage_scource, string **canvas, vector<co
             }
             drawing_remove(canvas,componants, high, wide,pick);
             componants.erase(componants.begin()+pick-1);
+            if(system("CLS")) system("clear");
         }
         
         else{

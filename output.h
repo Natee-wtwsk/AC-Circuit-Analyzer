@@ -54,7 +54,7 @@ void output(componant_voltage_scource voltage_scource,complex<double> Z){
     cout << "Your's function: " << I.current<< "cos( " << voltage_scource.angular_frequency << "t +" << I.offset << ")" << endl;
     }else cout << "Your's function: " << I.current<< "cos( " << voltage_scource.angular_frequency << "t " << I.offset << ")" << endl;
     cout<< "Your's impedance: "<< z_result.r <<"and Theta is: "<<z_result.Theta;
-
+    
 }
 
 #endif
