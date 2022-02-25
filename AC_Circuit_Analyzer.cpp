@@ -5,6 +5,7 @@
 #include<vector>
 #include<complex>
 #include<sstream>
+#include<stdlib.h>
 
 #include"struct.h"
 #include"input.h"
@@ -40,39 +41,52 @@ void output(string Z, double angular_frequency_process); // รับค่า�
 int main(){
     long int x_position, y_position;
     vector<componant_struct> componants;
+    vector<componant_struct> componants_to_analyze;
     string Z;
-    int voltage_source_position = 1;
     cout << "Please Enter AC voltage function (Sinusoids)" << endl;
-    cout << "Voltage :";
+    cout << "Voltage : ";
     cin >> voltage_scource.voltage;
-    cout << "angular_frequency :";
+    cout << "angular_frequency : ";
     cin >> voltage_scource.angular_frequency;
-    cout << "offset :";
+    cout << "offset : ";
     cin >> voltage_scource.offset;
-    cout << "Your's function:" << voltage_scource.voltage << "cos(" << voltage_scource.angular_frequency << "t" << voltage_scource.offset << ")" << endl;
-    cout << "input your built plate(high wide):";
+    cout << "Your's function: " << voltage_scource.voltage << "cos(" << voltage_scource.angular_frequency << "t" << voltage_scource.offset << ")" << endl;
+    cout << "input your built plate(high wide): ";
     cin >> high;
     cin >> wide;
     
     string **canvas = new string*[high];
     for(int i = 0; i < high; i++) canvas[i] = new string[wide];
-    //drawing(canvas, componants);
-
-    cout << "Place voltage source at:";
-    cin >> voltage_source_position;
-    to_x_and_y_position(voltage_source_position, x_position, y_position);
-    canvas[y_position-1][x_position-1] = "@";
-    cout << "voltage scource reference connent to:";
-    cin >> voltage_source_position;
-    to_x_and_y_position(voltage_source_position, x_position, y_position);
-    canvas[y_position-1][x_position-1] = "R";
 
     drawing(canvas, componants, high, wide);
-    input(voltage_scource, canvas, componants, high, wide);
-    cout << analysis(componants);
-    
+    do{
+        cout << "Place voltage source at: ";
+        cin >> voltage_scource.voltage_scourc_in_connect;
+        if((voltage_scource.voltage_scourc_in_connect > 0) && ((voltage_scource.voltage_scourc_in_connect) <= (high*wide))) break;
+        cout << "Invalid pick" << endl;
+    }while(true);
+    to_x_and_y_position(voltage_scource.voltage_scourc_in_connect, x_position, y_position);
+    canvas[y_position-1][x_position-1] = "@";
+    do{
+        cout << "voltage scource reference connent to: ";
+        cin >> voltage_scource.voltage_scourc_out_connect;
+        if((voltage_scource.voltage_scourc_out_connect > 0) && ((voltage_scource.voltage_scourc_out_connect) <= (high*wide))) break;
+        cout << "Invalid pick" << endl;
+    }while(true);
+    to_x_and_y_position(voltage_scource.voltage_scourc_out_connect, x_position, y_position);
+    canvas[y_position-1][x_position-1] = "R";
+    system("CLS");
+    drawing(canvas, componants, high, wide);
+    input(voltage_scource, canvas, componants, componants_to_analyze, high, wide);
+    if(system("CLS")) system("clear");
+    drawing(canvas, componants, high, wide);
+    //for(int i = 0; i < componants.size(); i++) cout << componants[i].componant_type << " " << componants[i].componant_value_rectangular << endl;
+    //cout << voltage_source_analysis.connect_in << " " << voltage_source_analysis.connect_out << endl;
+    output(voltage_scource, analysis(componants_to_analyze, voltage_scource));
     for(int i = 0; i < high; i++) delete [] canvas[i];
     delete [] canvas;
+    cin.ignore();
+    cin.get();
     return 0;
 }
 
