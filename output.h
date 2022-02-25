@@ -33,16 +33,17 @@ void output(componant_voltage_scource voltage_scource,complex<double> Z){
     componant_Z z_result;
     componant_I I;
 
-    z_result.x_real = Z.real();
-    z_result.y_image = Z.imag();
-    /*cout<<"z: ";
+    /*z_result.x_real = Z.real();
+    z_result.y_image = Z.imag();*/
+    cout<<"z: ";
     cin>>z_result.x_real>>z_result.y_image;
     cout<<"v: ";
-    cin>>voltage_scource.voltage>>voltage_scource.angular_frequency>>voltage_scource.offset;*/
+    cin>>voltage_scource.voltage>>voltage_scource.angular_frequency>>voltage_scource.offset;
 
     if(z_result.x_real == 0&&z_result.y_image<0){z_result.Theta = -90;
     }else if(z_result.x_real == 0&&z_result.y_image>0){z_result.Theta = 90;
     }else if(z_result.y_image == 0){z_result.Theta = 0;
+    }else if(z_result.y_image == 0&&z_result.x_real == 0){z_result.Theta = 0;
     }else{ z_result.Theta = atan2(z_result.y_image,z_result.x_real)*180/M_PI;}
 
     z_result.r = sqrt(pow(z_result.x_real,2)+pow(z_result.y_image,2));
