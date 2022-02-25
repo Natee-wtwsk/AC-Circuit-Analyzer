@@ -95,8 +95,8 @@ int main(){
             cout << componants[i].componant_out_connect;
             if(componants[i].componant_value_polar > 0) cout << " Value:" << componants[i].componant_value_polar << endl;
             else cout << endl;
-            cout << endl;
         }
+        cout << endl;
         output(voltage_scource, analysis(componants_to_analyze, voltage_scource));
     }
     

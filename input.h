@@ -104,6 +104,7 @@ void input(componant_voltage_scource voltage_scource, string **canvas, vector<co
             continue;
         }
         cout << endl;
+        
         drawing_add(canvas, componants, voltage_scource, high, wide);
     }
 

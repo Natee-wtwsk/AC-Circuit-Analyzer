@@ -84,6 +84,7 @@ complex<double> analysis(vector<componant_struct> componants, componant_voltage_
     //analysis_connect();
     analysis_wire_connect();
     analysis_wire_and_components_connect();
+    if(analysis_short_circuit() == true) return complex<double>(0, 0);
     //for(int i = 0; i < components_analysis.size(); i++) cout << components_analysis[i].componant_type << " " << components_analysis[i].componant_value_rectangular << " " << components_analysis[i].componant_in_connect << " " << components_analysis[i].componant_out_connect << " " << components_analysis[i].connect_in << " " << components_analysis[i].connect_out << endl;
     //cout << voltage_source_analysis.connect_in << " " << voltage_source_analysis.connect_out << endl;
     int cycles = 0;
