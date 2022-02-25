@@ -86,6 +86,17 @@ int main(){
         drawing(canvas, componants, high, wide);
         //for(int i = 0; i < componants.size(); i++) cout << componants[i].componant_type << " " << componants[i].componant_value_rectangular << endl;
         //cout << voltage_source_analysis.connect_in << " " << voltage_source_analysis.connect_out << endl;
+        for(int i = 0; i < componants.size(); i++){
+            cout << i+1 << " " << componants[i].componant_in_connect;
+            if(componants[i].componant_type == 1) cout << "o----o";
+            else if(componants[i].componant_type == 2) cout << "o-MW-o";
+            else if(componants[i].componant_type == 3) cout << "o-||-o";
+            else if(componants[i].componant_type == 4) cout << "o-oo-o";
+            cout << componants[i].componant_out_connect;
+            if(componants[i].componant_value_polar > 0) cout << " Value:" << componants[i].componant_value_polar << endl;
+            else cout << endl;
+            cout << endl;
+        }
         output(voltage_scource, analysis(componants_to_analyze, voltage_scource));
     }
     
