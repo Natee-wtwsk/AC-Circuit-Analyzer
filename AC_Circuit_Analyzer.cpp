@@ -78,11 +78,17 @@ int main(){
     system("CLS");
     drawing(canvas, componants, high, wide);
     input(voltage_scource, canvas, componants, componants_to_analyze, high, wide);
-    if(system("CLS")) system("clear");
-    drawing(canvas, componants, high, wide);
-    //for(int i = 0; i < componants.size(); i++) cout << componants[i].componant_type << " " << componants[i].componant_value_rectangular << endl;
-    //cout << voltage_source_analysis.connect_in << " " << voltage_source_analysis.connect_out << endl;
-    output(voltage_scource, analysis(componants_to_analyze, voltage_scource));
+    if(componants.size() == 0){
+        cout << "Componants are empty";
+    }
+    else{
+        if(system("CLS")) system("clear");
+        drawing(canvas, componants, high, wide);
+        //for(int i = 0; i < componants.size(); i++) cout << componants[i].componant_type << " " << componants[i].componant_value_rectangular << endl;
+        //cout << voltage_source_analysis.connect_in << " " << voltage_source_analysis.connect_out << endl;
+        output(voltage_scource, analysis(componants_to_analyze, voltage_scource));
+    }
+    
     for(int i = 0; i < high; i++) delete [] canvas[i];
     delete [] canvas;
     cin.ignore();
