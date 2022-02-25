@@ -312,7 +312,7 @@ complex<double> connect_circuit(){
         return components_analysis[0].componant_value_rectangular;
     }
     else{
-            cout << "Unconnect Voltage Source";
+            cout << "Unconnect Voltage Source" << endl;
             return complex<double>(0, 0);
     }
 }
