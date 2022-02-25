@@ -43,7 +43,7 @@ int main(){
     vector<componant_struct> componants;
     vector<componant_struct> componants_to_analyze;
     string Z;
-    cout << "Please Enter AC voltage function (Sinusoids)" << endl;
+    cout << "Please Enter AC voltage function (Time Domain)" << endl;
     cout << "Voltage : ";
     cin >> voltage_scource.voltage;
     cout << "angular_frequency : ";

@@ -196,6 +196,7 @@ void analysis_wire_and_components_connect(){
     int j;
     for(int i = components_analysis_size-1; (i >= 0) && (components_analysis[i].componant_type != 1); i--){
         for(j = components_analysis_size-1; j >=0; j--){
+            if(i == j) continue;
             if(components_analysis[i].componant_in_connect == components_analysis[j].componant_in_connect) components_analysis[i].connect_in = components_analysis[j].connect_in;
             if(components_analysis[i].componant_in_connect == components_analysis[j].componant_out_connect) components_analysis[i].connect_in = components_analysis[j].connect_out;
             if(components_analysis[i].componant_out_connect == components_analysis[j].componant_in_connect) components_analysis[i].connect_out = components_analysis[j].connect_in;
@@ -279,13 +280,13 @@ void analysis_series(){
 bool analysis_short_circuit(){
     bool short_flag;
     int components_analysis_size = components_analysis.size();
-    for(int i = 0; i < components_analysis_size; i++){
+    /*for(int i = 0; i < components_analysis_size; i++){
         if((components_analysis[i].connect_in == components_analysis[i].connect_out) && (components_analysis[i].componant_value_rectangular != complex<double>(0, 0))){
             cout << "Short Circuit at Node " << components_analysis[i].connect_in << ", componant_value_rectangular is " << components_analysis[i].componant_value_rectangular << endl;
             short_flag = true;
             break;
         }
-    }
+    }*/
     if(voltage_source_analysis.connect_in == voltage_source_analysis.connect_out){
         cout << "Voltage Source is Short" << endl;
         short_flag = true;
@@ -295,7 +296,7 @@ bool analysis_short_circuit(){
 }
 
 complex<double> complex_processing_parallel(complex<double> complex1, complex<double> complex2){
-    if((complex1.real() == 0) && (complex1.imag() == 0)) return complex2;
+    if((complex1.real() == 0) && (complex1.imag() == 0) || (complex2.real() == 0) && (complex2.imag() == 0)) return complex<double>(0, 0);
     else return (complex1*complex2)/(complex1+complex2);
 }
 

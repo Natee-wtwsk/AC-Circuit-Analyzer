@@ -8,6 +8,7 @@
 
 #include"struct.h"
 #include"analysis.h"
+#include"output.h"
 
 using namespace std;
 
@@ -21,13 +22,74 @@ componant_voltage_scource voltage_scource;
 void to_x_and_y_position(long int position, long int &x_position, long int &y_position);
 
 int main(){
-    voltage_scource.voltage = 220;
-    voltage_scource.angular_frequency = 50;
+    voltage_scource.voltage = 2;
+    voltage_scource.angular_frequency = 10;
     voltage_scource.offset = 0; 
 	voltage_scource.voltage_scourc_in_connect = 0;
 	voltage_scource.voltage_scourc_out_connect = 0;
     vector<componant_struct> componants;
     componant_struct temp;
+    temp.componant_type = 1;
+    temp.componant_in_connect = 81;
+    temp.componant_out_connect = 85;
+    temp.componant_value_polar = 0;
+    temp.componant_value_rectangular = 0;
+    componants.push_back(temp);
+    temp.componant_type = 1;
+    temp.componant_in_connect = 85;
+    temp.componant_out_connect = 89;
+    temp.componant_value_polar = 0;
+    temp.componant_value_rectangular = 0;
+    componants.push_back(temp);
+    temp.componant_type = 1;
+    temp.componant_in_connect = 89;
+    temp.componant_out_connect = 93;
+    temp.componant_value_polar = 0;
+    temp.componant_value_rectangular = 0;
+    componants.push_back(temp);
+    temp.componant_type = 1;
+    temp.componant_in_connect = 5;
+    temp.componant_out_connect = 9;
+    temp.componant_value_polar = 0;
+    temp.componant_value_rectangular = 0;
+    componants.push_back(temp);
+    temp.componant_type = 1;
+    temp.componant_in_connect = 9;
+    temp.componant_out_connect = 13;
+    temp.componant_value_polar = 0;
+    temp.componant_value_rectangular = 0;
+    componants.push_back(temp);
+    temp.componant_type = 2;
+    temp.componant_in_connect = 1;
+    temp.componant_out_connect = 5;
+    temp.componant_value_polar = 1;
+    temp.componant_value_rectangular = 1;
+    componants.push_back(temp);
+    temp.componant_type = 2;
+    temp.componant_in_connect = 13;
+    temp.componant_out_connect = 93;
+    temp.componant_value_polar = 1;
+    temp.componant_value_rectangular = 1;
+    componants.push_back(temp);
+    temp.componant_type = 3;
+    temp.componant_in_connect = 5;
+    temp.componant_out_connect = 85;
+    temp.componant_value_polar = 1;
+    temp.componant_value_rectangular = -0.1;
+    componants.push_back(temp);
+    temp.componant_type = 4;
+    temp.componant_in_connect = 9;
+    temp.componant_out_connect = 89;
+    temp.componant_value_polar = 1;
+    temp.componant_value_rectangular = 10;
+    componants.push_back(temp);
+    voltage_scource.voltage_scourc_in_connect = 1;
+    voltage_scource.voltage_scourc_out_connect = 81;
+    cout << analysis(componants, voltage_scource) << endl;
+    output(voltage_scource, analysis(componants, voltage_scource));
+    cout << endl;
+    
+    componants.clear();
     temp.componant_type = 1;
     temp.componant_in_connect = 42;
     temp.componant_out_connect = 46;
@@ -78,7 +140,7 @@ int main(){
     componants.push_back(temp);
     voltage_scource.voltage_scourc_in_connect = 42;
     voltage_scource.voltage_scourc_out_connect = 54;
-    cout << analysis(componants, voltage_scource);
+    cout << analysis(componants, voltage_scource) << endl;
     componants.clear();
 
     temp.componant_type = 1;
@@ -113,7 +175,7 @@ int main(){
     componants.push_back(temp);
     voltage_scource.voltage_scourc_in_connect = 2;
     voltage_scource.voltage_scourc_out_connect = 22;
-    cout << analysis(componants, voltage_scource);
+    cout << analysis(componants, voltage_scource) << endl;
     componants.clear();
 
     temp.componant_type = 1;
@@ -178,7 +240,7 @@ int main(){
     componants.push_back(temp);
     voltage_scource.voltage_scourc_in_connect = 11;
     voltage_scource.voltage_scourc_out_connect = 16;
-    cout << analysis(componants, voltage_scource);
+    cout << analysis(componants, voltage_scource) << endl;
     componants.clear();
 
     temp.componant_type = 1;
@@ -292,12 +354,12 @@ int main(){
     temp.componant_value_rectangular = 7;
     componants.push_back(temp);
     temp.componant_type = 1;
-    temp.componant_in_connect = 53;
+    temp.componant_in_connect = 54;
     temp.componant_out_connect = 71;
     temp.componant_value_polar = 0;
-    temp.componant_value_rectangular = 0;
-    componants.push_back(temp);*/
-    cout << analysis(componants, voltage_scource);
+    temp.componant_value_rectangular = 0;*/
+    componants.push_back(temp);
+    cout << analysis(componants, voltage_scource) << endl;
     componants.clear();
 
     return 0;
